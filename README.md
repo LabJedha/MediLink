@@ -22,6 +22,7 @@
 
 - 📋 [Kanban Notion](https://www.notion.so/8b984243247c411783483b382120f95a?v=5c4355ca51074d87b19f4ea7398cd7a2)
 - 🗂️ [Documentation technique](./docs/architecture/)
+- 🔬 [Rapport de veille technologique](./docs/veille/veille_technologique.md)
 - 🔐 [Registre RGPD](./docs/rgpd/)
 - 💰 [Estimation budgétaire](./docs/budget/budget_medilink.md)
 - 📊 [Analyse PESTEL](./docs/pestel/pestel_medilink.md)
