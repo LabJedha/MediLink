@@ -25,6 +25,7 @@
 - 🔐 [Registre RGPD](./docs/rgpd/)
 - 💰 [Estimation budgétaire](./docs/budget/budget_medilink.md)
 - 📊 [Analyse PESTEL](./docs/pestel/pestel_medilink.md)
+- 🌐 [Site vitrine MediLink](https://labjedha.github.io/MediLink/) ← *accessible publiquement*
 - 🔍 [Rapport de pentest](./docs/pentest/)
 - 🎤 [Slides Démo Day](./presentations/demo-day/)
 
