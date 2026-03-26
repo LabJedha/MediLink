@@ -54,7 +54,9 @@ ML-NET-SW-01 · Cisco IOU L2 — Switch · Routage inter-VLANs
     ├── VLAN 40  · Administratif · 192.168.40.0/27  · RH · Comptabilité
     ├── VLAN 50  · DMZ           · 192.168.50.0/29  · Nginx · MySQL
     ├── VLAN 60  · WiFi Guest    · 192.168.60.0/26  · Patients (Internet only)
-    └── VLAN 70  · Monitoring    · 192.168.70.0/29  · Wazuh · Zabbix
+    ├── VLAN 70  · Monitoring    · 192.168.70.0/29  · Wazuh · Zabbix
+    ├── VLAN 222 · Management    · 192.168.222.0/28 · SW-01 · SW-02 · Gateway · Équipements réseau
+    └── VLAN 999 · Parking       · —                · Ports inutilisés · Imprimantes · Non assignés
 ```
 
 ---
@@ -78,6 +80,8 @@ ML-NET-SW-01 · Cisco IOU L2 — Switch · Routage inter-VLANs
 | 13 | ML-SRV-ZABBIX-01 | Ubuntu 22.04 | 70 | 192.168.70.2/29 | 2 Go | Emilien |
 
 **Total RAM utilisée :** ~26.5 Go · VM Jedha : 40 Go RAM / 8 vCPU / 230 Go stockage
+
+> **Mise à jour J4 :** VLAN 222 Management (192.168.222.0/28) et VLAN 999 Parking ajoutés par Mohamed.
 
 ---
 
