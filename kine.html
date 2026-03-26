@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kinésithérapie — MediLink Saint-Flour</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{--navy:#0a2540;--teal:#0d7377;--teal-pale:#e8f7f6;--white:#ffffff;--gray-light:#f7f9fc;--gray:#6b7280;--gray-dark:#374151;--border:#e5eaf0;--shadow:0 4px 24px rgba(10,37,64,0.08);}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;color:var(--navy);background:var(--white);}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,0.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:72px;}
+.nav-logo{display:flex;align-items:center;gap:0.75rem;text-decoration:none;}
+.nav-logo-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--teal),var(--navy));border-radius:10px;display:flex;align-items:center;justify-content:center;color:white;font-size:1.1rem;}
+.nav-logo span{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--navy);}
+.nav-back{display:flex;align-items:center;gap:0.5rem;text-decoration:none;color:var(--teal);font-weight:600;font-size:0.9rem;padding:0.5rem 1rem;border:1px solid var(--teal);border-radius:8px;transition:background 0.2s;}
+.nav-back:hover{background:var(--teal-pale);}
+.page-hero{margin-top:72px;background:linear-gradient(135deg,var(--navy) 0%,#0d4f6b 100%);color:white;padding:4rem 2rem;}
+.page-hero-inner{max-width:1100px;margin:0 auto;display:block;}
+.page-hero-icon{font-size:4rem;}
+.page-hero-text .breadcrumb{font-size:0.8rem;opacity:0.6;margin-bottom:0.5rem;}
+.page-hero-text h1{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:700;margin-bottom:0.75rem;}
+.page-hero-text p{opacity:0.85;max-width:500px;line-height:1.7;}
+.rdv-bar{background:white;border-bottom:1px solid var(--border);padding:1rem 2rem;display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;}
+.rdv-phone{display:flex;align-items:center;gap:0.5rem;font-weight:600;color:var(--teal);font-size:1.1rem;}
+.btn-doctolib-large{background:#0056b3;color:white;padding:0.7rem 1.5rem;border-radius:10px;text-decoration:none;font-weight:600;display:flex;align-items:center;gap:0.5rem;transition:background 0.2s;}
+.btn-doctolib-large:hover{background:#003d82;}
+section{padding:4rem 2rem;}
+.container{max-width:1100px;margin:0 auto;}
+.content-grid{display:grid;grid-template-columns:2fr 1fr;gap:3rem;align-items:start;}
+@media(max-width:768px){.content-grid{grid-template-columns:1fr;}}
+.photos-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:2rem;}
+.photo-card{border-radius:12px;background:linear-gradient(135deg,var(--teal-pale),#d0f0ee);height:180px;display:flex;align-items:center;justify-content:center;font-size:4rem;box-shadow:var(--shadow);}
+.photo-card.wide{grid-column:span 2;height:220px;font-size:5rem;}.photo-card img{width:100%;height:100%;object-fit:cover;display:block;}.photo-card::after{content:'';position:absolute;inset:0;background:linear-gradient(to top, rgba(10,37,64,.18), rgba(10,37,64,.02));}.photo-card{position:relative;overflow:hidden;min-height:180px;}.photo-card.wide{min-height:220px;}@media (max-width:768px){.photo-card,.photo-card.wide{height:200px;min-height:200px;}.photos-grid{grid-template-columns:1fr;}.photo-card.wide{grid-column:span 1;}}
+.section-label{font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);margin-bottom:0.5rem;}
+.section-title{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--navy);margin-bottom:1rem;}
+.content-text p{color:var(--gray-dark);line-height:1.8;margin-bottom:1rem;}
+.services-list{margin:1.5rem 0;}
+.service-item{display:flex;align-items:flex-start;gap:1rem;padding:0.75rem 0;border-bottom:1px solid var(--border);}
+.service-item:last-child{border:none;}
+.service-icon{color:var(--teal);margin-top:0.1rem;}
+.service-item p{font-size:0.95rem;color:var(--gray-dark);}
+.sidebar-card{background:var(--gray-light);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;}
+.sidebar-card h4{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:1rem;color:var(--navy);}
+.praticien{display:flex;align-items:center;gap:0.75rem;padding:0.75rem 0;border-bottom:1px solid var(--border);}
+.praticien:last-child{border:none;}
+.praticien-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--navy));display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:1rem;}
+.praticien-info strong{display:block;font-size:0.9rem;color:var(--navy);}
+.praticien-info span{font-size:0.8rem;color:var(--gray);}
+.info-row{display:flex;justify-content:space-between;padding:0.5rem 0;font-size:0.9rem;border-bottom:1px solid var(--border);}
+.info-row:last-child{border:none;}
+.info-row span:first-child{color:var(--gray);}
+.info-row span:last-child{font-weight:600;color:var(--navy);}
+footer{background:var(--navy);color:white;padding:2rem;text-align:center;font-size:0.85rem;opacity:0.7;}
+footer a{color:#7dd3c8;text-decoration:none;}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon"><i class="fas fa-heartbeat"></i></div>
+    <span>MediLink</span>
+  </a>
+  <a href="index.html" class="nav-back"><i class="fas fa-arrow-left"></i> Retour à l'accueil</a>
+</nav>
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-hero-text">
+      <div class="breadcrumb">MediLink › Spécialités › Kinésithérapie</div>
+      <h1>Kinésithérapie</h1>
+      <p>Rééducation fonctionnelle et traitement des troubles musculo-squelettiques.</p>
+    </div>
+  </div>
+</div>
+<div class="rdv-bar">
+  <div class="rdv-phone"><i class="fas fa-phone-alt"></i> Secrétariat : 04 71 60 11 55</div>
+  <span style="color:#d1d5db;">ou</span>
+  <a href="https://www.doctolib.fr" target="_blank" rel="noopener noreferrer" class="btn-doctolib-large"><i class="fas fa-calendar-check"></i> Prendre RDV sur Doctolib</a>
+</div>
+<section>
+  <div class="container">
+    <div class="content-grid">
+      <div>
+        <div class="photos-grid">
+          <div class="photo-card wide"><img src="assets/kine-1.jpg" alt="Visuel kine 1" loading="lazy"></div>
+          <div class="photo-card"><img src="assets/kine-2.jpg" alt="Visuel kine 2" loading="lazy"></div>
+          <div class="photo-card"><img src="assets/kine-3.jpg" alt="Visuel kine 3" loading="lazy"></div></div>
+
+        </div>
+        <div class="section-label">Notre service</div>
+        <h2 class="section-title">Kinésithérapie à Saint-Flour</h2>
+        <div class="content-text">
+          <p>Rééducation fonctionnelle et traitement des troubles musculo-squelettiques. Notre équipe de praticiens expérimentés vous accueille dans un cadre moderne et bienveillant.</p>
+          <p>Nous mettons tout en œuvre pour vous offrir des soins de qualité, accessibles sans délai excessif, au cœur du Cantal.</p>
+        </div>
+        <div class="services-list">
+          <div class="service-item"><i class="fas fa-check-circle service-icon"></i><p>Rééducation post-opératoire et traumatologique</p></div>
+          <div class="service-item"><i class="fas fa-check-circle service-icon"></i><p>Traitement des douleurs chroniques (dos, épaule, genou)</p></div>
+          <div class="service-item"><i class="fas fa-check-circle service-icon"></i><p>Kinésithérapie respiratoire adulte et pédiatrique</p></div>
+          <div class="service-item"><i class="fas fa-check-circle service-icon"></i><p>Rééducation neurologique (AVC, SEP)</p></div>
+          <div class="service-item"><i class="fas fa-check-circle service-icon"></i><p>Drainage lymphatique manuel</p></div>
+          <div class="service-item"><i class="fas fa-check-circle service-icon"></i><p>Bilans posturaux</p></div>
+        </div>
+      </div>
+      <div>
+        <div class="sidebar-card">
+          <h4>Nos praticiens</h4>
+          <div class="praticien">
+            <div class="praticien-avatar">TR</div>
+            <div class="praticien-info"><strong>Thomas Rousseau</strong><span>Masseur-kinésithérapeute</span></div>
+          </div>
+          <div class="praticien">
+            <div class="praticien-avatar">JM</div>
+            <div class="praticien-info"><strong>Julie Marchand</strong><span>Kinésithérapeute du sport</span></div>
+          </div>
+        </div>
+        <div class="sidebar-card">
+          <h4>Informations pratiques</h4>
+          <div class="info-row"><span>Secteur</span><span>Secteur 1</span></div>
+          <div class="info-row"><span>Carte Vitale</span><span>✅ Acceptée</span></div>
+          <div class="info-row"><span>Mutuelle</span><span>Tiers payant possible</span></div>
+          <div class="info-row"><span>Délai RDV</span><span>48h–72h</span></div>
+        </div>
+        <div class="sidebar-card" style="background:linear-gradient(135deg,var(--teal),var(--navy));color:white;">
+          <h4 style="color:white;">Prendre rendez-vous</h4>
+          <p style="font-size:0.85rem;opacity:0.85;margin-bottom:1rem;">Par téléphone ou en ligne :</p>
+          <a href="tel:0471601155" style="display:flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.15);color:white;padding:0.6rem 1rem;border-radius:8px;text-decoration:none;font-weight:600;margin-bottom:0.75rem;"><i class="fas fa-phone"></i> 04 71 60 11 55</a>
+          <a href="https://www.doctolib.fr" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:0.5rem;background:white;color:#0056b3;padding:0.6rem 1rem;border-radius:8px;text-decoration:none;font-weight:600;"><i class="fas fa-calendar-check"></i> Doctolib</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<footer><p>© 2025 <a href="index.html">MediLink</a> — Cabinet Médical Saint-Flour, Cantal</p></footer>
+</body>
+</html>

@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MediLink — Cabinet Médical Pluridisciplinaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --navy: #0a2540;
+  --teal: #0d7377;
+  --teal-light: #14a085;
+  --teal-pale: #e8f7f6;
+  --accent: #e8f4f8;
+  --white: #ffffff;
+  --gray-light: #f7f9fc;
+  --gray: #6b7280;
+  --gray-dark: #374151;
+  --border: #e5eaf0;
+  --shadow: 0 4px 24px rgba(10,37,64,0.08);
+  --shadow-hover: 0 12px 40px rgba(10,37,64,0.15);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--navy);
+  background: var(--white);
+  line-height: 1.6;
+}
+
+/* ─── NAVBAR ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 72px;
+}
+
+.nav-logo {
+  display: flex; align-items: center; gap: 0.75rem;
+  text-decoration: none;
+}
+
+.nav-logo-icon {
+  width: 40px; height: 40px;
+  background: linear-gradient(135deg, var(--teal), var(--navy));
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 1.1rem;
+}
+
+.nav-logo span {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem; font-weight: 700;
+  color: var(--navy);
+}
+
+.nav-links {
+  display: flex; align-items: center; gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  text-decoration: none; color: var(--gray-dark);
+  font-size: 0.9rem; font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--teal); }
+
+.nav-cta {
+  background: var(--teal); color: white !important;
+  padding: 0.5rem 1.2rem; border-radius: 8px;
+  transition: background 0.2s !important;
+}
+
+.nav-cta:hover { background: var(--navy) !important; color: white !important; }
+
+/* ─── HERO ─── */
+.hero {
+  margin-top: 72px;
+  background: linear-gradient(135deg, var(--navy) 0%, #0d4f6b 60%, var(--teal) 100%);
+  color: white;
+  padding: 5rem 2rem 4rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 0.4rem 1rem; border-radius: 20px;
+  font-size: 0.8rem; font-weight: 500; letter-spacing: 0.05em;
+  text-transform: uppercase; margin-bottom: 1.5rem;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 700; line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.hero h1 span { color: #7dd3c8; }
+
+.hero p {
+  font-size: 1.1rem; opacity: 0.85;
+  max-width: 560px; margin: 0 auto 2rem;
+}
+
+.hero-actions {
+  display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: white; color: var(--navy);
+  padding: 0.85rem 2rem; border-radius: 10px;
+  text-decoration: none; font-weight: 600; font-size: 0.95rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+}
+
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+
+.btn-secondary {
+  background: transparent; color: white;
+  padding: 0.85rem 2rem; border-radius: 10px;
+  text-decoration: none; font-weight: 500; font-size: 0.95rem;
+  border: 1px solid rgba(255,255,255,0.4);
+  transition: background 0.2s;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+}
+
+.btn-secondary:hover { background: rgba(255,255,255,0.1); }
+
+.hero-stats {
+  display: flex; justify-content: center; gap: 3rem;
+  margin-top: 3rem; padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  flex-wrap: wrap;
+}
+
+.stat { text-align: center; }
+.stat-num { font-size: 2rem; font-weight: 700; font-family: 'Playfair Display', serif; }
+.stat-label { font-size: 0.8rem; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* ─── URGENCE BANNER ─── */
+.urgence-banner {
+  background: #fff3cd; border-bottom: 2px solid #ffc107;
+  padding: 0.75rem 2rem;
+  display: flex; align-items: center; justify-content: center; gap: 1rem;
+  font-size: 0.9rem; font-weight: 500; color: #856404;
+}
+
+/* ─── SECTIONS ─── */
+section { padding: 5rem 2rem; }
+
+.container { max-width: 1100px; margin: 0 auto; }
+
+.section-label {
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--teal);
+  margin-bottom: 0.75rem;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 700; color: var(--navy);
+  margin-bottom: 1rem;
+}
+
+.section-subtitle {
+  font-size: 1rem; color: var(--gray);
+  max-width: 540px; margin-bottom: 3rem;
+}
+
+/* ─── SPECIALITÉS ─── */
+#specialites { background: var(--gray-light); }
+
+.specialites-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .specialites-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.specialite-card {
+  cursor: pointer;
+
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s, box-shadow 0.3s;
+  text-decoration: none;
+  color: inherit;
+  display: flex; flex-direction: column;
+}
+
+.specialite-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+}
+
+.specialite-img {
+  width: 100%;
+  height: 212px;
+  overflow: hidden;
+  background: #eef6f7;
+}
+.specialite-img img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+.specialite-body {
+  padding: 1.25rem;
+  flex: 1; display: flex; flex-direction: column;
+}
+
+.specialite-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem; font-weight: 700;
+  color: var(--navy); margin-bottom: 0.5rem;
+}
+
+.specialite-phone {
+  font-size: 0.82rem; color: var(--teal);
+  font-weight: 600; margin-bottom: 0.75rem;
+  display: flex; align-items: center; gap: 0.4rem;
+}
+
+.specialite-actions {
+  display: flex; gap: 0.5rem; margin-top: auto;
+}
+
+.btn-tel {
+  flex: 1; padding: 0.55rem 0.5rem;
+  background: var(--teal-pale); color: var(--teal);
+  border: 1px solid var(--teal); border-radius: 8px;
+  font-size: 0.78rem; font-weight: 600;
+  text-decoration: none; text-align: center;
+  transition: background 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 0.3rem;
+}
+
+.btn-tel:hover { background: var(--teal); color: white; }
+
+.btn-doctolib {
+  flex: 1; padding: 0.55rem 0.5rem;
+  background: #0056b3; color: white;
+  border-radius: 8px;
+  font-size: 0.78rem; font-weight: 600;
+  text-decoration: none; text-align: center;
+  transition: background 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 0.3rem;
+}
+
+.btn-doctolib:hover { background: #003d82; }
+
+/* ─── INFOS PRATIQUES ─── */
+#infos { background: white; }
+
+.infos-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 3rem; align-items: start;
+}
+
+@media (max-width: 768px) { .infos-grid { grid-template-columns: 1fr; } }
+
+.map-container {
+  border-radius: 16px; overflow: hidden;
+  box-shadow: var(--shadow);
+  height: 380px;
+}
+
+.map-container iframe { width: 100%; height: 100%; border: none; }
+
+.infos-details h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--navy);
+}
+
+.info-item {
+  display: flex; gap: 1rem; align-items: flex-start;
+  padding: 1rem 0; border-bottom: 1px solid var(--border);
+}
+
+.info-icon {
+  width: 40px; height: 40px; min-width: 40px;
+  background: var(--teal-pale);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--teal); font-size: 1rem;
+}
+
+.info-text strong { display: block; color: var(--navy); font-weight: 600; margin-bottom: 0.2rem; }
+.info-text span { font-size: 0.9rem; color: var(--gray); }
+
+.horaires-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0.5rem; margin-top: 1rem;
+}
+
+.horaire-row {
+  display: flex; justify-content: space-between;
+  font-size: 0.9rem; padding: 0.4rem 0;
+}
+
+.horaire-row span:first-child { color: var(--gray); }
+.horaire-row span:last-child { font-weight: 600; color: var(--navy); }
+.fermé { color: #ef4444 !important; }
+
+/* ─── CONTACT ─── */
+#contact { background: var(--gray-light); }
+
+.contact-grid {
+  display: grid; grid-template-columns: 1fr 1.5fr;
+  gap: 3rem;
+}
+
+@media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } }
+
+.contact-info h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem; margin-bottom: 1rem; color: var(--navy);
+}
+
+.contact-info p { color: var(--gray); font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.5rem; }
+
+.social-links {
+  display: flex; gap: 0.75rem; margin-top: 1.5rem;
+}
+
+.social-link {
+  width: 42px; height: 42px;
+  background: white; border: 1px solid var(--border);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--navy); text-decoration: none; font-size: 1.1rem;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.social-link:hover { background: var(--teal); color: white; border-color: var(--teal); }
+
+.contact-form {
+  background: white; border-radius: 20px;
+  padding: 2rem; box-shadow: var(--shadow);
+}
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+@media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+
+.form-group { margin-bottom: 1rem; }
+
+.form-group label {
+  display: block; font-size: 0.85rem; font-weight: 600;
+  color: var(--navy); margin-bottom: 0.4rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%; padding: 0.75rem 1rem;
+  border: 1px solid var(--border); border-radius: 10px;
+  font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+  color: var(--navy); background: var(--gray-light);
+  transition: border-color 0.2s, background 0.2s;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--teal); background: white;
+}
+
+.form-group textarea { resize: vertical; min-height: 120px; }
+
+.btn-submit {
+  width: 100%; padding: 0.9rem;
+  background: linear-gradient(135deg, var(--teal), var(--navy));
+  color: white; border: none; border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem; font-weight: 600; cursor: pointer;
+  transition: opacity 0.2s, transform 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+}
+
+.btn-submit:hover { opacity: 0.9; transform: translateY(-1px); }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--navy); color: white;
+  padding: 3rem 2rem 1.5rem;
+}
+
+.footer-grid {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 2rem; margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; } }
+
+.footer-brand p { font-size: 0.85rem; opacity: 0.65; line-height: 1.7; margin-top: 0.75rem; }
+
+.footer-col h4 {
+  font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; opacity: 0.5; margin-bottom: 1rem;
+}
+
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 0.5rem; }
+.footer-col ul li a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.88rem; transition: color 0.2s; }
+.footer-col ul li a:hover { color: #7dd3c8; }
+
+.footer-bottom {
+  max-width: 1100px; margin: 0 auto;
+  padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.8rem; opacity: 0.5; flex-wrap: wrap; gap: 0.5rem;
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up { animation: fadeUp 0.6s ease forwards; }
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+
+/* ─── ACCESSIBILITÉ ─── */
+.urgence-number {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  background: #dc2626; color: white;
+  padding: 0.3rem 0.8rem; border-radius: 6px;
+  font-weight: 700; font-size: 0.85rem;
+}
+
+.tag-nouveau {
+  background: #dcfce7; color: #16a34a;
+  font-size: 0.7rem; font-weight: 700;
+  padding: 0.2rem 0.5rem; border-radius: 4px;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  margin-left: 0.4rem;
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon"><i class="fas fa-heartbeat"></i></div>
+    <span>MediLink</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#specialites">Spécialités</a></li>
+    <li><a href="#infos">Infos pratiques</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#contact" class="nav-cta"><i class="fas fa-calendar-check"></i> Prendre RDV</a></li>
+  </ul>
+</nav>
+
+<!-- URGENCE BANNER -->
+<div class="urgence-banner">
+  <i class="fas fa-exclamation-triangle"></i>
+  <span>En cas d'urgence médicale, appelez le</span>
+  <span class="urgence-number"><i class="fas fa-phone"></i> 15 — SAMU</span>
+  <span>ou le</span>
+  <span class="urgence-number">18 — Pompiers</span>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge"><i class="fas fa-map-marker-alt"></i> Saint-Flour, Cantal (15) — Désert médical</div>
+  <h1 class="fade-up">Votre santé,<br><span>notre priorité</span></h1>
+  <p class="fade-up delay-1">Cabinet médical pluridisciplinaire au service des habitants du Cantal. 8 spécialistes réunis pour vous offrir des soins de qualité près de chez vous.</p>
+  <div class="hero-actions fade-up delay-2">
+    <a href="#specialites" class="btn-primary"><i class="fas fa-stethoscope"></i> Nos spécialités</a>
+    <a href="#contact" class="btn-secondary"><i class="fas fa-envelope"></i> Nous contacter</a>
+  </div>
+  <div class="hero-stats fade-up delay-3">
+    <div class="stat"><div class="stat-num">8</div><div class="stat-label">Spécialités</div></div>
+    <div class="stat"><div class="stat-num">12</div><div class="stat-label">Praticiens</div></div>
+    <div class="stat"><div class="stat-num">4 500</div><div class="stat-label">Patients suivis</div></div>
+    <div class="stat"><div class="stat-num">6j/7</div><div class="stat-label">Ouverture</div></div>
+  </div>
+</section>
+
+<!-- SPÉCIALITÉS -->
+<section id="specialites">
+  <div class="container">
+    <div class="section-label">Nos spécialités</div>
+    <h2 class="section-title">Des soins complets près de chez vous</h2>
+    <p class="section-subtitle">Prenez rendez-vous par téléphone ou directement en ligne via Doctolib.</p>
+
+    <div class="specialites-grid">
+
+      <!-- Généraliste -->
+      <article class="specialite-card" data-href="generaliste.html" tabindex="0" role="link" aria-label="Accéder à la page Médecine Générale">
+        <div class="specialite-img"><img src="assets/doctor-consultation.jpg" alt="Médecine générale" loading="lazy"></div>
+        <div class="specialite-body">
+          <div class="specialite-name">Médecine Générale</div>
+          <div class="specialite-phone"><i class="fas fa-phone-alt"></i> 04 71 60 11 22</div>
+          <div class="specialite-actions">
+            <a href="tel:0471601122" class="btn-tel" onclick="event.stopPropagation()"><i class="fas fa-phone"></i> Appeler</a>
+            <a href="https://www.doctolib.fr" target="_blank" rel="noopener noreferrer" class="btn-doctolib" onclick="event.stopPropagation()"><i class="fas fa-calendar"></i> Doctolib</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Pédiatre -->
+      <article class="specialite-card" data-href="pediatre.html" tabindex="0" role="link" aria-label="Accéder à la page Pédiatrie">
+        <div class="specialite-img"><img src="assets/pediatrician.jpg" alt="Pédiatrie" loading="lazy"></div>
+        <div class="specialite-body">
+          <div class="specialite-name">Pédiatrie</div>
+          <div class="specialite-phone"><i class="fas fa-phone-alt"></i> 04 71 60 11 33</div>
+          <div class="specialite-actions">
+            <a href="tel:0471601133" class="btn-tel" onclick="event.stopPropagation()"><i class="fas fa-phone"></i> Appeler</a>
+            <a href="https://www.doctolib.fr" target="_blank" rel="noopener noreferrer" class="btn-doctolib" onclick="event.stopPropagation()"><i class="fas fa-calendar"></i> Doctolib</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Gynéco -->
+      <article class="specialite-card" data-href="gyneco.html" tabindex="0" role="link" aria-label="Accéder à la page Gynécologie">
+        <div class="specialite-img"><img src="assets/gyneco-1.jpg" alt="Gynécologie" loading="lazy"></div>
+        <div class="specialite-body">
+          <div class="specialite-name">Gynécologie <span class="tag-nouveau">Nouveau</span></div>
+          <div class="specialite-phone"><i class="fas fa-phone-alt"></i> 04 71 60 11 44</div>
+          <div class="specialite-actions">
+            <a href="tel:0471601144" class="btn-tel" onclick="event.stopPropagation()"><i class="fas fa-phone"></i> Appeler</a>
+            <a href="https://www.doctolib.fr" target="_blank" rel="noopener noreferrer" class="btn-doctolib" onclick="event.stopPropagation()"><i class="fas fa-calendar"></i> Doctolib</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Kiné -->
+      <article class="specialite-card" data-href="kine.html" tabindex="0" role="link" aria-label="Accéder à la page Kinésithérapie">
+        <div class="specialite-img"><img src="assets/physio.jpg" alt="Kinésithérapie" loading="lazy"></div>
+        <div class="specialite-body">
+          <div class="specialite-name">Kinésithérapie</div>
+          <div class="specialite-phone"><i class="fas fa-phone-alt"></i> 04 71 60 11 55</div>
+          <div class="specialite-actions">
+            <a href="tel:0471601155" class="btn-tel" onclick="event.stopPropagation()"><i class="fas fa-phone"></i> Appeler</a>
+            <a href="https://www.doctolib.fr" target="_blank" rel="noopener noreferrer" class="btn-doctolib" onclick="event.stopPropagation()"><i class="fas fa-calendar"></i> Doctolib</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Podologue -->
+      <article class="specialite-card" data-href="podologue.html" tabindex="0" role="link" aria-label="Accéder à la page Podologie">
+        <div class="specialite-img"><img src="assets/podiatry.jpg" alt="Podologie" loading="lazy"></div>
+        <div class="specialite-body">
+          <div class="specialite-name">Podologie</div>
+          <div class="specialite-phone"><i class="fas fa-phone-alt"></i> 04 71 60 11 66</div>
+          <div class="specialite-actions">
+            <a href="tel:0471601166" class="btn-tel" onclick="event.stopPropagation()"><i class="fas fa-phone"></i> Appeler</a>
+            <a href="https://www.doctolib.fr" target="_blank" rel="noopener noreferrer" class="btn-doctolib" onclick="event.stopPropagation()"><i class="fas fa-calendar"></i> Doctolib</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Dentiste -->
+      <article class="specialite-card" data-href="dentiste.html" tabindex="0" role="link" aria-label="Accéder à la page Chirurgie Dentaire">
+        <div class="specialite-img"><img src="assets/dentist.jpg" alt="Chirurgie dentaire" loading="lazy"></div>
+        <div class="specialite-body">
+          <div class="specialite-name">Chirurgie Dentaire</div>
+          <div class="specialite-phone"><i class="fas fa-phone-alt"></i> 04 71 60 11 77</div>
+          <div class="specialite-actions">
+            <a href="tel:0471601177" class="btn-tel" onclick="event.stopPropagation()"><i class="fas fa-phone"></i> Appeler</a>
+            <a href="https://www.doctolib.fr" target="_blank" rel="noopener noreferrer" class="btn-doctolib" onclick="event.stopPropagation()"><i class="fas fa-calendar"></i> Doctolib</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Ophtalmo -->
+      <article class="specialite-card" data-href="ophtalmo.html" tabindex="0" role="link" aria-label="Accéder à la page Ophtalmologie">
+        <div class="specialite-img"><img src="assets/ophthalmology.jpg" alt="Ophtalmologie" loading="lazy"></div>
+        <div class="specialite-body">
+          <div class="specialite-name">Ophtalmologie</div>
+          <div class="specialite-phone"><i class="fas fa-phone-alt"></i> 04 71 60 11 88</div>
+          <div class="specialite-actions">
+            <a href="tel:0471601188" class="btn-tel" onclick="event.stopPropagation()"><i class="fas fa-phone"></i> Appeler</a>
+            <a href="https://www.doctolib.fr" target="_blank" rel="noopener noreferrer" class="btn-doctolib" onclick="event.stopPropagation()"><i class="fas fa-calendar"></i> Doctolib</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Laboratoire -->
+      <article class="specialite-card" data-href="laboratoire.html" tabindex="0" role="link" aria-label="Accéder à la page Laboratoire d'analyses">
+        <div class="specialite-img"><img src="assets/lab-scientist.jpg" alt="Laboratoire d'analyses" loading="lazy"></div>
+        <div class="specialite-body">
+          <div class="specialite-name">Laboratoire d'analyses</div>
+          <div class="specialite-phone"><i class="fas fa-phone-alt"></i> 04 71 60 11 99</div>
+          <div class="specialite-actions">
+            <a href="tel:0471601199" class="btn-tel" onclick="event.stopPropagation()"><i class="fas fa-phone"></i> Appeler</a>
+            <a href="https://www.doctolib.fr" target="_blank" rel="noopener noreferrer" class="btn-doctolib" onclick="event.stopPropagation()"><i class="fas fa-calendar"></i> Doctolib</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- INFOS PRATIQUES -->
+<section id="infos">
+  <div class="container">
+    <div class="section-label">Infos pratiques</div>
+    <h2 class="section-title">Comment nous trouver</h2>
+
+    <div class="infos-grid">
+      <div class="map-container">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d22345.678!2d3.0862!3d45.0333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47f52b2e2a1b3a5d%3A0x4f2e1a2b3c4d5e6f!2sSaint-Flour%2C%20Cantal!5e0!3m2!1sfr!2sfr!4v1234567890"
+          allowfullscreen="" loading="lazy">
+        </iframe>
+      </div>
+
+      <div class="infos-details">
+        <h3>Cabinet MediLink — Saint-Flour</h3>
+
+        <div class="info-item">
+          <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div class="info-text">
+            <strong>Adresse</strong>
+            <span>12 Rue de la République, 15100 Saint-Flour, Cantal</span>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon"><i class="fas fa-phone-alt"></i></div>
+          <div class="info-text">
+            <strong>Standard général</strong>
+            <span>04 71 60 10 00</span>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon"><i class="fas fa-envelope"></i></div>
+          <div class="info-text">
+            <strong>Email</strong>
+            <span>contact@medilink-saintflour.fr</span>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon"><i class="fas fa-parking"></i></div>
+          <div class="info-text">
+            <strong>Parking</strong>
+            <span>Parking gratuit sur place — Accès PMR disponible</span>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon"><i class="fas fa-clock"></i></div>
+          <div class="info-text">
+            <strong>Horaires d'ouverture</strong>
+            <div class="horaires-grid">
+              <div class="horaire-row"><span>Lundi</span><span>08h00 – 19h00</span></div>
+              <div class="horaire-row"><span>Mardi</span><span>08h00 – 19h00</span></div>
+              <div class="horaire-row"><span>Mercredi</span><span>08h00 – 18h00</span></div>
+              <div class="horaire-row"><span>Jeudi</span><span>08h00 – 19h00</span></div>
+              <div class="horaire-row"><span>Vendredi</span><span>08h00 – 18h00</span></div>
+              <div class="horaire-row"><span>Samedi</span><span>09h00 – 12h30</span></div>
+              <div class="horaire-row"><span>Dimanche</span><span class="fermé">Fermé</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-label">Contactez-nous</div>
+    <h2 class="section-title">Une question ? Écrivez-nous</h2>
+
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Nous sommes à votre écoute</h3>
+        <p>Pour toute demande d'information, de rendez-vous ou de renseignements administratifs, notre équipe vous répond dans les meilleurs délais.</p>
+        <p>Pour les urgences médicales, composez le <strong>15 (SAMU)</strong> ou rendez-vous aux urgences de l'Hôpital de Saint-Flour.</p>
+
+        <div class="info-item" style="border:none; padding-top:0;">
+          <div class="info-icon"><i class="fas fa-phone-alt"></i></div>
+          <div class="info-text">
+            <strong>Standard</strong>
+            <span>04 71 60 10 00</span>
+          </div>
+        </div>
+
+        <div class="social-links">
+          <a href="#" class="social-link" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-link" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" class="social-link" title="Google Maps"><i class="fab fa-google"></i></a>
+          <a href="#" class="social-link" title="Doctolib"><i class="fas fa-calendar-check"></i></a>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Prénom</label>
+            <input type="text" placeholder="Jean">
+          </div>
+          <div class="form-group">
+            <label>Nom</label>
+            <input type="text" placeholder="Dupont">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" placeholder="jean@example.com">
+          </div>
+          <div class="form-group">
+            <label>Téléphone</label>
+            <input type="tel" placeholder="06 00 00 00 00">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Spécialité concernée</label>
+          <select>
+            <option value="">Sélectionnez une spécialité</option>
+            <option>Médecine Générale</option>
+            <option>Pédiatrie</option>
+            <option>Gynécologie</option>
+            <option>Kinésithérapie</option>
+            <option>Podologie</option>
+            <option>Chirurgie Dentaire</option>
+            <option>Ophtalmologie</option>
+            <option>Laboratoire d'analyses</option>
+            <option>Autre</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Votre message</label>
+          <textarea placeholder="Décrivez votre demande..."></textarea>
+        </div>
+        <button class="btn-submit"><i class="fas fa-paper-plane"></i> Envoyer le message</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.75rem;">
+        <div class="nav-logo-icon"><i class="fas fa-heartbeat"></i></div>
+        <span style="font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:700;">MediLink</span>
+      </div>
+      <p>Cabinet médical pluridisciplinaire situé à Saint-Flour, au cœur du Cantal. Nous œuvrons chaque jour pour améliorer l'accès aux soins dans les déserts médicaux.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Spécialités</h4>
+      <ul>
+        <li><a href="generaliste.html">Médecine Générale</a></li>
+        <li><a href="pediatre.html">Pédiatrie</a></li>
+        <li><a href="gyneco.html">Gynécologie</a></li>
+        <li><a href="kine.html">Kinésithérapie</a></li>
+        <li><a href="podologue.html">Podologie</a></li>
+        <li><a href="dentiste.html">Dentisterie</a></li>
+        <li><a href="ophtalmo.html">Ophtalmologie</a></li>
+        <li><a href="laboratoire.html">Laboratoire</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Infos utiles</h4>
+      <ul>
+        <li><a href="#infos">Horaires</a></li>
+        <li><a href="#infos">Accès & Parking</a></li>
+        <li><a href="#">Tarifs & Secteur</a></li>
+        <li><a href="#">Carte Vitale</a></li>
+        <li><a href="#">Urgences locales</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Légal</h4>
+      <ul>
+        <li><a href="#">Mentions légales</a></li>
+        <li><a href="#">Politique de confidentialité</a></li>
+        <li><a href="#">RGPD & Données</a></li>
+        <li><a href="#">Accessibilité</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 MediLink — Cabinet Médical Saint-Flour. Tous droits réservés.</span>
+    <span>Réalisé dans le cadre du projet Jedha Bootcamp 2025</span>
+  </div>
+</footer>
+
+
+<script>
+  document.querySelectorAll('.specialite-card[data-href]').forEach(function(card){
+    card.addEventListener('click', function(e){
+      if(e.target.closest('a, button')) return;
+      window.location.href = card.getAttribute('data-href');
+    });
+    card.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        window.location.href = card.getAttribute('data-href');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
