@@ -152,4 +152,23 @@ Conformément au RGPD, les patients et le personnel du cabinet disposent des dro
 
 ---
 
+## Traitement 6 — Sauvegarde externe hors site (AWS S3) *(sur plan — fictif)*
+
+| Champ | Détail |
+|-------|--------|
+| **Finalité** | Continuité de service · Protection contre sinistre physique · Règle 3-2-1 |
+| **Base légale** | Art. 6.1.c RGPD — Obligation légale (Art. 32 RGPD — disponibilité des données) |
+| **Catégories de données** | Copies chiffrées des dossiers patients · Configurations système |
+| **Personnes concernées** | Patients · Personnel du cabinet |
+| **Destinataires** | Administrateurs IT uniquement · AWS (sous-traitant technique) |
+| **Transferts hors UE** | ❌ Aucun — Région AWS eu-west-3 Paris · Données restent dans l'UE |
+| **Durée de conservation** | 30 jours sur S3 · Lifecycle policy automatique |
+| **Sous-traitant** | Amazon Web Services EMEA SARL · DPA (Data Processing Agreement) signé |
+| **Machine** | ML-AWS-BACKUPCOPY-01 · AWS S3 · eu-west-3 Paris |
+| **Mesures de sécurité** | Chiffrement AES-256 côté client avant envoi · SSE-S3 côté AWS · IAM Role dédié · Accès restreint · Logs S3 activés · Bucket privé |
+| **Risques identifiés** | Accès non autorisé au bucket · Fuite de données chez le provider · Coût imprévu |
+| **Mesures de réduction** | Chiffrement client (AWS ne peut pas lire) · IAM moindre privilège · Alertes de facturation AWS |
+
+---
+
 *MediLink — Cabinet Médical fictif · Jedha Bootcamp 2025 · Confidentiel équipe*

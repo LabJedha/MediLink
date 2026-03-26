@@ -245,9 +245,22 @@ Switch · Trunk · Ports access par VLAN
 | Services | Zabbix Server · Zabbix Frontend · MySQL |
 | Ports ouverts | 10051 (agents) · 443 (frontend) — restreint VLAN 10 |
 
----
+### ML-AWS-BACKUPCOPY-01 · Sauvegarde externe AWS *(sur plan — fictif)*
+| Champ | Valeur |
+|-------|--------|
+| Nom | ML-AWS-BACKUPCOPY-01 |
+| Hébergement | AWS S3 · Région eu-west-3 Paris |
+| IP | Elastic IP publique AWS (fictive) |
+| Équipier | Cheima |
+| Rôle | Sauvegarde externe hors site · Règle 3-2-1 |
+| Service | AWS S3 Bucket privé `medilink-backup-prod` |
+| Chiffrement | AES-256 côté client + SSE-S3 côté AWS |
+| Authentification | IAM Role dédié · Moindre privilège |
+| Rétention | 30 jours · Lifecycle policy automatique |
+| Accès | Depuis ML-SRV-URBACKUP-01 uniquement · HTTPS TLS 1.3 |
+| Conformité RGPD | Données dans l'UE · DPA AWS signé |
 
-## 4. Règles inter-VLANs pfSense
+---
 
 | Source | Destination | Port/Proto | Action | Justification |
 |--------|-------------|-----------|--------|---------------|
@@ -311,6 +324,54 @@ Patient WiFi (VLAN 60)
 Monitoring (VLAN 70)
     └──→ Reçoit les logs de tous les VLANs (agents Wazuh)
 ```
+
+---
+
+## 7. Sauvegarde externe hors site — AWS S3 *(sur plan — fictif)*
+
+> Cette composante est documentée comme choix architectural. Elle n'est pas déployée dans l'infrastructure GNS3 du projet.
+
+### Justification
+
+La règle **3-2-1** des sauvegardes impose :
+- **3** copies des données
+- sur **2** supports différents
+- dont **1** copie hors site
+
+Les sauvegardes locales (UrBackup sur VLAN 20) couvrent les 2 premières conditions. AWS S3 couvre la troisième — protection contre un sinistre physique (incendie, inondation, vol).
+
+### Architecture prévue
+
+```
+ML-SRV-URBACKUP-01 (VLAN 20)
+        │
+        ▼ Chiffrement AES-256 côté client
+        │
+        ▼ HTTPS (TLS 1.3)
+        │
+☁️  AWS S3 · Bucket privé · Région eu-west-3 (Paris)
+```
+
+### Spécifications techniques
+
+| Champ | Valeur |
+|-------|--------|
+| Provider | Amazon Web Services (AWS) |
+| Service | S3 (Simple Storage Service) |
+| Région | eu-west-3 — Paris (données en Europe, conformité RGPD) |
+| Bucket | `medilink-backup-prod` (privé, accès restreint) |
+| Chiffrement | AES-256 côté client avant envoi + SSE-S3 côté AWS |
+| Authentification | IAM Role dédié · Accès limité au minimum (principe du moindre privilège) |
+| Fréquence | Sauvegarde quotidienne automatique via UrBackup |
+| Rétention | 30 jours de rétention sur S3 · Lifecycle policy automatique |
+| Coût estimé | ~5–15 €/mois selon volume (fictif) |
+
+### Mesures de conformité RGPD
+
+- Région AWS Paris (eu-west-3) → données restent dans l'UE → pas de transfert hors UE
+- Chiffrement AES-256 avant envoi → AWS ne peut pas lire les données
+- IAM Policy restrictive → accès uniquement depuis ML-SRV-URBACKUP-01
+- Logs d'accès S3 activés → traçabilité complète
 
 ---
 

@@ -57,6 +57,8 @@ ML-NET-SW-01 · Cisco IOU L2 — Switch · Routage inter-VLANs
     ├── VLAN 70  · Monitoring    · 192.168.70.0/29  · Wazuh · Zabbix
     ├── VLAN 222 · Management    · 192.168.222.0/28 · SW-01 · SW-02 · Gateway · Équipements réseau
     └── VLAN 999 · Parking       · —                · Ports inutilisés · Imprimantes · Non assignés
+
+☁️  AWS S3 (hors site) — Sauvegarde externe chiffrée · Règle 3-2-1 · Fictif / sur plan
 ```
 
 ---
@@ -71,13 +73,14 @@ ML-NET-SW-01 · Cisco IOU L2 — Switch · Routage inter-VLANs
 | 4 | ML-SRV-AD-02 | Windows Server 2022 | 20 | 192.168.20.11/27 | 4 Go | Mohamed |
 | 5 | ML-SRV-JUMP-01 | Ubuntu 22.04 | 10 | 192.168.10.10/28 | 1 Go | Mohamed |
 | 6 | ML-SRV-JUMP-02 | Ubuntu 22.04 | 10 | 192.168.10.11/28 | 1 Go | Mohamed |
-| 7 | ML-SRV-PASS-01 | Ubuntu 22.04 | 10 | 192.168.10.12/28 | 1 Go | Eddy |
-| 8 | ML-SRV-WEB-01 | Ubuntu 22.04 | 50 | 192.168.50.2/29 | 2 Go | Eddy + Cheima |
+| 7 | ML-SRV-PASS-01 | Ubuntu 22.04 | 10 | 192.168.10.12/28 | 1 Go | **Eddy** |
+| 8 | ML-SRV-WEB-01 | Ubuntu 22.04 | 50 | 192.168.50.2/29 | 2 Go | **Eddy + Cheima** |
 | 9 | ML-SRV-FILE-01 | Ubuntu 22.04 | 20 | 192.168.20.12/27 | 2 Go | Cheima |
 | 10 | ML-SRV-URBACKUP-01 | Ubuntu 22.04 | 20 | 192.168.20.13/27 | 2 Go | Cheima |
 | 11 | ML-SRV-BACKUP-01 | Ubuntu 22.04 | 20 | 192.168.20.14/27 | 1 Go | Cheima |
 | 12 | ML-SRV-WAZUH-01 | Ubuntu 22.04 | 70 | 192.168.70.3/29 | 4 Go | Eric + Emilien |
 | 13 | ML-SRV-ZABBIX-01 | Ubuntu 22.04 | 70 | 192.168.70.2/29 | 2 Go | Emilien |
+| ☁️ | ML-AWS-BACKUPCOPY-01 | AWS S3 | Cloud | Elastic IP publique AWS | — | Cheima |
 
 **Total RAM utilisée :** ~26.5 Go · VM Jedha : 40 Go RAM / 8 vCPU / 230 Go stockage
 
@@ -97,7 +100,8 @@ ML-NET-SW-01 · Cisco IOU L2 — Switch · Routage inter-VLANs
 | Web | Nginx + TLS | Site vitrine médical · VLAN 50 DMZ |
 | Base de données | MySQL + phpMyAdmin | Données patients · Interface admin |
 | Fichiers | Samba / File Server | Partage de documents · Droits AD |
-| Sauvegarde | UrBackup + Backup Storage | Sauvegardes auto chiffrées |
+| Sauvegarde | UrBackup + Backup Storage | Sauvegardes auto chiffrées · Local |
+| Sauvegarde hors site | AWS S3 (fictif) | Sauvegarde externe chiffrée · Règle 3-2-1 |
 | SIEM | Wazuh | Détection d'intrusion · Journalisation |
 | Monitoring | Zabbix | Supervision réseau · Métriques |
 | DevOps | Git + GitHub | Versionnage configs et scripts |
