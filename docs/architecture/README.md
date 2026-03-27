@@ -1,377 +1,186 @@
-# Documentation Technique — Architecture MediLink
+# MediLink — Infrastructure IT · Cabinet Médical fictif — Auteur : Eddy GASSAB
 
 > **Jedha Bootcamp 2025 — Projet Final**  
-> Infrastructure IT — Cabinet Médical fictif  
-> Dernière mise à jour : J4 · 26 mars 2026
+> Infrastructure IT sécurisée simulant les besoins d'un cabinet médical  
+> Durée : 10 jours · Démarrage : 23 mars 2026
 
 ---
 
-## Sommaire
+## Équipe
 
-1. [Vue d'ensemble](#1-vue-densemble)
-2. [Segmentation réseau — 7 VLANs](#2-segmentation-réseau--7-vlans)
-3. [Machines déployées](#3-machines-déployées)
-4. [Règles inter-VLANs pfSense](#4-règles-inter-vlans-pfsense)
-5. [Accès SSH — Procédure jumpbox](#5-accès-ssh--procédure-jumpbox)
-6. [Flux réseau autorisés](#6-flux-réseau-autorisés)
+| Équipier | Rôle | Périmètre |
+|----------|------|-----------|
+| **Mohamed** | Infrastructure & Réseau | GNS3 · pfSense · Switch · AD · Jumpbox |
+| **Eric** | Sécurité & Accès | OpenVPN · MFA · Wazuh · Pentest accès |
+| **Eddy** | Chef de projet technique | Nginx · Passbolt · Doc · Slides Démo Day |
+| **Cheima** | BDD · Fichiers · Backup | MySQL · File Server · UrBackup |
+| **Emilien** | Monitoring & Pentest réseau | Zabbix · Wazuh (binôme) · Pentest réseau |
 
 ---
 
-## 1. Vue d'ensemble
+## Liens rapides
 
-L'infrastructure MediLink simule le réseau informatique d'un cabinet médical fictif.  
-Elle est hébergée sur une VM Jedha (40 Go RAM / 8 vCPU / 230 Go) via GNS3 + VirtualBox.
+- 📋 [Kanban Notion](https://www.notion.so/8b984243247c411783483b382120f95a?v=5c4355ca51074d87b19f4ea7398cd7a2)
+- 🗂️ [Documentation technique](./docs/architecture/)
+- 🔬 [Rapport de veille technologique](./docs/veille/veille_technologique.md)
+- 🔐 [Registre RGPD](./docs/rgpd/)
+- 💰 [Estimation budgétaire](./docs/budget/budget_medilink.md)
+- 📊 [Analyse PESTEL](./docs/pestel/pestel_medilink.md)
+- 🌐 [Site vitrine MediLink](https://labjedha.github.io/MediLink/site/) ← *accessible publiquement*
+- 🔍 [Rapport de pentest](./docs/pentest/)
+- 🎤 [Slides Démo Day](./presentations/demo-day/)
+
+---
+
+## Contexte du projet
+
+Le projet MediLink simule l'infrastructure IT d'un cabinet médical fictif.  
+Les contraintes sont volontairement fortes : données de santé (Article 9 RGPD), segmentation réseau avancée, authentification multi-facteurs, traçabilité des accès.
+
+**Objectif :** déployer, sécuriser et documenter une infrastructure complète, puis la présenter devant un jury.
+
+---
+
+## Architecture — Vue d'ensemble
 
 ```
 Internet (WAN)
-      │
-      ▼
-ML-NET-FW-01 · pfSense (FreeBSD)
-Firewall · NAT · VPN · Routage inter-VLANs
-      │
-      ▼
-ML-NET-SW-01 · Cisco IOU L2
-Switch · Trunk · Ports access par VLAN
-      │
-      ├── VLAN 10  · Admin IT
-      ├── VLAN 20  · Serveurs
-      ├── VLAN 30  · WiFi Interne (Médecins/Infirmiers)
-      ├── VLAN 40  · Administratif (RH/Comptabilité)
-      ├── VLAN 50  · DMZ (Web Server)
-      ├── VLAN 60  · WiFi Guest (Patients)
-      ├── VLAN 70  · Monitoring (Wazuh/Zabbix)
-      ├── VLAN 222 · Management (SW-01 · SW-02 · Gateway · Équipements réseau)
-      └── VLAN 999 · Parking (Ports inutilisés · Imprimantes · Non assignés)
-```
-
----
-
-## 2. Segmentation réseau — 7 VLANs
-
-| VLAN | Nom | Réseau | Masque | Hôtes max | Usage |
-|------|-----|--------|--------|-----------|-------|
-| 10 | Admin IT | 192.168.10.0 | /28 | 14 | Jumpbox · Passbolt |
-| 20 | Serveurs | 192.168.20.0 | /27 | 30 | AD · Fichiers · Backup |
-| 30 | WiFi Interne | 192.168.30.0 | /26 | 62 | Médecins · Infirmiers |
-| 40 | Administratif | 192.168.40.0 | /27 | 30 | RH · Comptabilité |
-| 50 | DMZ | 192.168.50.0 | /29 | 6 | Nginx · MySQL |
-| 60 | WiFi Guest | 192.168.60.0 | /26 | 62 | Patients · Internet only |
-| 70 | Monitoring | 192.168.70.0 | /29 | 6 | Wazuh · Zabbix |
-| 222 | Management | 192.168.222.0 | /28 | 14 | SW-01 (192.168.222.2) · SW-02 (192.168.222.1) · Gateway · Équipements réseau |
-| 999 | Parking | — | — | — | Ports inutilisés · Imprimantes · Équipements non assignés |
-
-**Principe de sécurité :** chaque VLAN est isolé par défaut. Le trafic inter-VLANs est filtré par des règles pfSense explicites. Tout ce qui n'est pas autorisé est bloqué.
-
----
-
-## 3. Machines déployées
-
-### ML-NET-FW-01 · pfSense
-| Champ | Valeur |
-|-------|--------|
-| OS | FreeBSD (pfSense CE) |
-| Rôle | Firewall · NAT · VPN · Routage inter-VLANs |
-| VLAN | WAN + tous VLANs |
-| Équipier | Mohamed |
-| Services | pfSense WebUI (443) · OpenVPN (1194/UDP) |
-| Ports ouverts | 443 (admin, VLAN 10 only) · 1194 UDP (VPN) |
-
----
-
-### ML-NET-SW-01 · Cisco IOU L2
-| Champ | Valeur |
-|-------|--------|
-| OS | Cisco IOU L2 (GNS3) |
-| Rôle | Switch L2 · Trunk vers pfSense · Ports access par VLAN |
-| Équipier | Mohamed |
-| Config | 7 VLANs configurés · Port trunk vers ML-NET-FW-01 |
-
----
-
-### ML-SRV-AD-01 · Active Directory Principal
-| Champ | Valeur |
-|-------|--------|
-| OS | Windows Server 2022 |
-| VLAN | 20 — Serveurs |
-| IP | 192.168.20.10/27 |
-| RAM | 4 Go |
-| Équipier | Mohamed |
-| Rôle | Contrôleur de domaine principal · DHCP · DNS |
-| Domaine | cabinet.local |
-| Services | AD DS · DNS (53) · DHCP (67/68) · LDAP (389) · LDAPS (636) |
-| Ports ouverts | 53 · 67/68 · 88 · 135 · 389 · 445 · 636 · 3268 |
-
----
-
-### ML-SRV-AD-02 · Active Directory Secondaire
-| Champ | Valeur |
-|-------|--------|
-| OS | Windows Server 2022 |
-| VLAN | 20 — Serveurs |
-| IP | 192.168.20.11/27 |
-| RAM | 4 Go |
-| Équipier | Mohamed |
-| Rôle | Contrôleur de domaine secondaire · Redondance AD |
-| Services | AD DS · DNS · Réplication depuis AD-01 |
-
----
-
-### ML-SRV-JUMP-01 · Jumpbox principale
-| Champ | Valeur |
-|-------|--------|
-| OS | Ubuntu 22.04 Server |
-| VLAN | 10 — Admin IT |
-| IP | 192.168.10.10/28 |
-| RAM | 1 Go |
-| Équipier | Mohamed |
-| Rôle | Point d'entrée SSH/RDP vers l'infrastructure |
-| Services | SSH (22) |
-| Accès | Via VPN OpenVPN uniquement · Utilisateur : admin_jump |
-| Ports ouverts | 22 (SSH) — restreint aux admins VPN |
-
----
-
-### ML-SRV-JUMP-02 · Jumpbox secondaire
-| Champ | Valeur |
-|-------|--------|
-| OS | Ubuntu 22.04 Server |
-| VLAN | 10 — Admin IT |
-| IP | 192.168.10.11/28 |
-| RAM | 1 Go |
-| Équipier | Mohamed |
-| Rôle | Jumpbox de secours / admin secondaire |
-| Services | SSH (22) |
-
----
-
-### ML-SRV-PASS-01 · Passbolt
-| Champ | Valeur |
-|-------|--------|
-| OS | Ubuntu 22.04 Server |
-| VLAN | 10 — Admin IT |
-| IP | 192.168.10.12/28 |
-| RAM | 1 Go |
-| Équipier | Eddy |
-| Rôle | Gestionnaire de mots de passe équipe IT |
-| Domaine AD | cabinet.local (jointure realm) |
-| Services | Passbolt CE · Nginx · MySQL · PHP-FPM |
-| Ports ouverts | 443 (HTTPS Passbolt) — restreint VLAN 10 |
-| URL | https://192.168.10.12 |
-
----
-
-### ML-SRV-WEB-01 · Serveur Web
-| Champ | Valeur |
-|-------|--------|
-| OS | Ubuntu 22.04 Server |
-| VLAN | 50 — DMZ |
-| IP | 192.168.50.2/29 |
-| RAM | 2 Go |
-| Équipier | Eddy + Cheima |
-| Rôle | Site vitrine médical · Base de données patients |
-| Services | Nginx · MySQL · phpMyAdmin · PHP-FPM |
-| Ports ouverts | 80 (redirect → 443) · 443 (HTTPS) |
-| URL | https://192.168.50.2 |
-| phpMyAdmin | https://192.168.50.2/phpmyadmin — restreint VLAN 10 |
-| TLS | Auto-signé · TLS 1.2/1.3 · Headers OWASP |
-| Pages | index · dentiste · généraliste · gynéco · kiné · labo · ophtalmo · pédiatre · podologue |
-
----
-
-### ML-SRV-FILE-01 · Serveur de fichiers
-| Champ | Valeur |
-|-------|--------|
-| OS | Ubuntu 22.04 Server |
-| VLAN | 20 — Serveurs |
-| IP | 192.168.20.12/27 |
-| RAM | 2 Go |
-| Équipier | Cheima |
-| Rôle | Partage de fichiers · Droits par rôle AD |
-| Services | Samba |
-| Ports ouverts | 445 (SMB) — restreint VLANs 30/40 |
-
----
-
-### ML-SRV-URBACKUP-01 · Serveur de sauvegarde
-| Champ | Valeur |
-|-------|--------|
-| OS | Ubuntu 22.04 Server |
-| VLAN | 20 — Serveurs |
-| IP | 192.168.20.13/27 |
-| RAM | 2 Go |
-| Équipier | Cheima |
-| Rôle | Sauvegardes automatiques chiffrées |
-| Services | UrBackup Server |
-| Ports ouverts | 55414 (WebUI) · 55415 (backup) — restreint VLAN 10/20 |
-
----
-
-### ML-SRV-BACKUP-01 · Stockage de sauvegarde
-| Champ | Valeur |
-|-------|--------|
-| OS | Ubuntu 22.04 Server |
-| VLAN | 20 — Serveurs |
-| IP | 192.168.20.14/27 |
-| RAM | 1 Go |
-| Équipier | Cheima |
-| Rôle | Repository cible des sauvegardes UrBackup |
-
----
-
-### ML-SRV-WAZUH-01 · SIEM
-| Champ | Valeur |
-|-------|--------|
-| OS | Ubuntu 22.04 Server |
-| VLAN | 70 — Monitoring |
-| IP | 192.168.70.3/29 |
-| RAM | 4 Go |
-| Équipier | Eric + Emilien |
-| Rôle | SIEM · Détection d'intrusion · Journalisation |
-| Services | Wazuh Manager · Wazuh Dashboard · Elasticsearch |
-| Ports ouverts | 1514 (agents) · 1515 · 443 (dashboard) — restreint VLAN 10 |
-| Agents | Déployés sur tous les serveurs |
-
----
-
-### ML-SRV-ZABBIX-01 · Supervision réseau
-| Champ | Valeur |
-|-------|--------|
-| OS | Ubuntu 22.04 Server |
-| VLAN | 70 — Monitoring |
-| IP | 192.168.70.2/29 |
-| RAM | 2 Go |
-| Équipier | Emilien |
-| Rôle | Supervision réseau · Métriques · Alertes |
-| Services | Zabbix Server · Zabbix Frontend · MySQL |
-| Ports ouverts | 10051 (agents) · 443 (frontend) — restreint VLAN 10 |
-
-### ML-AWS-BACKUPCOPY-01 · Sauvegarde externe AWS *(sur plan — fictif)*
-| Champ | Valeur |
-|-------|--------|
-| Nom | ML-AWS-BACKUPCOPY-01 |
-| Hébergement | AWS S3 · Région eu-west-3 Paris |
-| IP | Elastic IP publique AWS (fictive) |
-| Équipier | Cheima |
-| Rôle | Sauvegarde externe hors site · Règle 3-2-1 |
-| Service | AWS S3 Bucket privé `medilink-backup-prod` |
-| Chiffrement | AES-256 côté client + SSE-S3 côté AWS |
-| Authentification | IAM Role dédié · Moindre privilège |
-| Rétention | 30 jours · Lifecycle policy automatique |
-| Accès | Depuis ML-SRV-URBACKUP-01 uniquement · HTTPS TLS 1.3 |
-| Conformité RGPD | Données dans l'UE · DPA AWS signé |
-
----
-
-| Source | Destination | Port/Proto | Action | Justification |
-|--------|-------------|-----------|--------|---------------|
-| VLAN 10 (Admin) | Tous VLANs | Any | ✅ Autorisé | Admins IT accèdent à toute l'infra |
-| VLAN 30 (Médecins) | VLAN 20 (Fichiers) | 445 SMB | ✅ Autorisé | Accès dossiers patients |
-| VLAN 30 (Médecins) | VLAN 50 (DMZ) | 443 HTTPS | ✅ Autorisé | Accès portail web interne |
-| VLAN 40 (Administratif) | VLAN 20 (Fichiers) | 445 SMB | ✅ Autorisé | Accès documents RH |
-| VLAN 50 (DMZ) | VLAN 20 (Serveurs) | 3306 MySQL | ✅ Autorisé | Web → BDD patients |
-| VLAN 60 (Guest) | Internet | 80/443 | ✅ Autorisé | Patients WiFi internet only |
-| VLAN 60 (Guest) | Tous VLANs internes | Any | 🚫 Bloqué | Isolation totale patients |
-| VLAN 70 (Monitoring) | Tous VLANs | 1514 | ✅ Autorisé | Collecte logs Wazuh |
-| Tous VLANs | VLAN 70 | Any | 🚫 Bloqué | Monitoring isolé |
-| WAN | VLAN 50 (DMZ) | 443 | ✅ Autorisé | Site web accessible depuis VPN |
-| WAN | Tous VLANs internes | Any | 🚫 Bloqué | Pas d'accès direct depuis internet |
-
----
-
-## 5. Accès SSH — Procédure jumpbox
-
-L'accès à toute machine de l'infrastructure passe obligatoirement par la jumpbox.  
-**Accès direct SSH depuis internet : interdit.**
-
-```
-[Admin] → OpenVPN (10.10.100.0/24) → ML-SRV-JUMP-01 (192.168.10.10) → Machine cible
-```
-
-**Étapes :**
-
-```bash
-# 1. Se connecter au VPN OpenVPN (Google Authenticator requis)
-# Client OpenVPN configuré sur le poste admin
-
-# 2. SSH vers la jumpbox
-ssh admin_jump@192.168.10.10
-
-# 3. Depuis la jumpbox, SSH vers la machine cible
-ssh user@192.168.50.2      # ML-SRV-WEB-01
-ssh user@192.168.10.12     # ML-SRV-PASS-01
-ssh user@192.168.20.10     # ML-SRV-AD-01 (si besoin)
-```
-
----
-
-## 6. Flux réseau autorisés
-
-```
-Médecin (VLAN 30)
     │
-    ├──→ VLAN 20 (Fichiers) · port 445 · dossiers patients
-    └──→ VLAN 50 (DMZ)     · port 443 · portail web
+    ▼
+ML-NET-FW-01 · pfSense (FreeBSD) — Firewall · NAT · VPN
+    │
+    ▼
+ML-NET-SW-01 · Cisco IOU L2 — Switch · Routage inter-VLANs
+    │
+    ├── VLAN 10  · Admin IT      · 192.168.10.0/28  · Jumpbox x2 · Passbolt
+    ├── VLAN 20  · Serveurs      · 192.168.20.0/27  · AD x2 · Fichiers · Backup
+    ├── VLAN 30  · WiFi Interne  · 192.168.30.0/26  · Médecins · Infirmiers
+    ├── VLAN 40  · Administratif · 192.168.40.0/27  · RH · Comptabilité
+    ├── VLAN 50  · DMZ           · 192.168.50.0/29  · Nginx · MySQL
+    ├── VLAN 60  · WiFi Guest    · 192.168.60.0/26  · Patients (Internet only)
+    ├── VLAN 70  · Monitoring    · 192.168.70.0/29  · Wazuh · Zabbix
+    ├── VLAN 222 · Management    · 192.168.222.0/28 · SW-01 · SW-02 · Gateway · Équipements réseau
+    └── VLAN 999 · Parking       · —                · Ports inutilisés · Imprimantes · Non assignés
 
-Administratif (VLAN 40)
-    └──→ VLAN 20 (Fichiers) · port 445 · documents RH
-
-Admin IT (VLAN 10)
-    └──→ Tous VLANs · accès complet
-
-Patient WiFi (VLAN 60)
-    └──→ Internet uniquement · VLANs internes bloqués
-
-Monitoring (VLAN 70)
-    └──→ Reçoit les logs de tous les VLANs (agents Wazuh)
+☁️  AWS S3 (hors site) — Sauvegarde externe chiffrée · Règle 3-2-1 · Fictif / sur plan
 ```
 
 ---
 
-## 7. Sauvegarde externe hors site — AWS S3 *(sur plan — fictif)*
+## Machines déployées
 
-> Cette composante est documentée comme choix architectural. Elle n'est pas déployée dans l'infrastructure GNS3 du projet.
+| # | Machine | OS | VLAN | IP | RAM | Équipier |
+|---|---------|----|----|-----|-----|----------|
+| 1 | ML-NET-FW-01 | FreeBSD (pfSense) | — | — | 512 Mo | Mohamed |
+| 2 | ML-NET-SW-01 | Cisco IOU L2 | — | — | 256 Mo | Mohamed |
+| 3 | ML-SRV-AD-01 | Windows Server 2022 | 20 | 192.168.20.10/27 | 4 Go | Mohamed |
+| 4 | ML-SRV-AD-02 | Windows Server 2022 | 20 | 192.168.20.11/27 | 4 Go | Mohamed |
+| 5 | ML-SRV-JUMP-01 | Ubuntu 22.04 | 10 | 192.168.10.10/28 | 1 Go | Mohamed |
+| 6 | ML-SRV-JUMP-02 | Ubuntu 22.04 | 10 | 192.168.10.11/28 | 1 Go | Mohamed |
+| 7 | ML-SRV-PASS-01 | Ubuntu 22.04 | 10 | 192.168.10.12/28 | 1 Go | **Eddy** |
+| 8 | ML-SRV-WEB-01 | Ubuntu 22.04 | 50 | 192.168.50.2/29 | 2 Go | **Eddy + Cheima** |
+| 9 | ML-SRV-FILE-01 | Ubuntu 22.04 | 20 | 192.168.20.12/27 | 2 Go | Cheima |
+| 10 | ML-SRV-URBACKUP-01 | Ubuntu 22.04 | 20 | 192.168.20.13/27 | 2 Go | Cheima |
+| 11 | ML-SRV-BACKUP-01 | Ubuntu 22.04 | 20 | 192.168.20.14/27 | 1 Go | Cheima |
+| 12 | ML-SRV-WAZUH-01 | Ubuntu 22.04 | 70 | 192.168.70.3/29 | 4 Go | Eric + Emilien |
+| 13 | ML-SRV-ZABBIX-01 | Ubuntu 22.04 | 70 | 192.168.70.2/29 | 2 Go | Emilien |
+| ☁️ | ML-AWS-BACKUPCOPY-01 | AWS S3 | Cloud | Elastic IP publique AWS | — | Cheima |
 
-### Justification
+**Total RAM utilisée :** ~26.5 Go · VM Jedha : 40 Go RAM / 8 vCPU / 230 Go stockage
 
-La règle **3-2-1** des sauvegardes impose :
-- **3** copies des données
-- sur **2** supports différents
-- dont **1** copie hors site
+> **Mise à jour J4 :** VLAN 222 Management (192.168.222.0/28) et VLAN 999 Parking ajoutés par Mohamed.
 
-Les sauvegardes locales (UrBackup sur VLAN 20) couvrent les 2 premières conditions. AWS S3 couvre la troisième — protection contre un sinistre physique (incendie, inondation, vol).
+---
 
-### Architecture prévue
+## Stack technique
+
+| Catégorie | Outil | Rôle |
+|-----------|-------|------|
+| Réseau / Pare-feu | pfSense | Firewall · VLANs · NAT · VPN |
+| Switch | Cisco IOU L2 (GNS3) | Routage inter-VLANs |
+| Annuaire | Windows Server AD x2 | Authentification · DHCP · DNS · GPO |
+| Accès sécurisé | Jumpbox x2 + Passbolt | SSH/RDP isolé · Gestionnaire MDP |
+| VPN | OpenVPN + MFA | Accès distant · Google Authenticator |
+| Web | Nginx + TLS | Site vitrine médical · VLAN 50 DMZ |
+| Base de données | MySQL + phpMyAdmin | Données patients · Interface admin |
+| Fichiers | Samba / File Server | Partage de documents · Droits AD |
+| Sauvegarde | UrBackup + Backup Storage | Sauvegardes auto chiffrées · Local |
+| Sauvegarde hors site | AWS S3 (fictif) | Sauvegarde externe chiffrée · Règle 3-2-1 |
+| SIEM | Wazuh | Détection d'intrusion · Journalisation |
+| Monitoring | Zabbix | Supervision réseau · Métriques |
+| DevOps | Git + GitHub | Versionnage configs et scripts |
+| Gestion projet | Notion (Kanban) | Suivi des tâches · Documentation |
+
+---
+
+## Structure du repo
 
 ```
-ML-SRV-URBACKUP-01 (VLAN 20)
-        │
-        ▼ Chiffrement AES-256 côté client
-        │
-        ▼ HTTPS (TLS 1.3)
-        │
-☁️  AWS S3 · Bucket privé · Région eu-west-3 (Paris)
+MediLink/
+├── README.md
+├── docs/
+│   ├── architecture/       # Schémas réseau · draw.io
+│   ├── rgpd/               # Registre des traitements RGPD
+│   ├── pentest/            # Rapport pentest (J7-J8)
+│   └── procedures/         # Procédures techniques (SSH, VPN, Passbolt)
+├── configs/
+│   ├── pfsense/            # Règles pfSense (Mohamed)
+│   ├── switch/             # Config Cisco IOU (Mohamed)
+│   ├── nginx/              # Config Nginx (Eddy)
+│   ├── passbolt/           # Config Passbolt (Eddy)
+│   ├── ad/                 # GPO + scripts AD (Mohamed)
+│   ├── wazuh/              # Config Wazuh (Eric)
+│   └── zabbix/             # Config Zabbix (Emilien)
+├── scripts/
+│   └── setup/              # Scripts d'installation
+└── presentations/
+    └── demo-day/           # Slides Démo Day (Eddy)
 ```
 
-### Spécifications techniques
+---
 
-| Champ | Valeur |
-|-------|--------|
-| Provider | Amazon Web Services (AWS) |
-| Service | S3 (Simple Storage Service) |
-| Région | eu-west-3 — Paris (données en Europe, conformité RGPD) |
-| Bucket | `medilink-backup-prod` (privé, accès restreint) |
-| Chiffrement | AES-256 côté client avant envoi + SSE-S3 côté AWS |
-| Authentification | IAM Role dédié · Accès limité au minimum (principe du moindre privilège) |
-| Fréquence | Sauvegarde quotidienne automatique via UrBackup |
-| Rétention | 30 jours de rétention sur S3 · Lifecycle policy automatique |
-| Coût estimé | ~5–15 €/mois selon volume (fictif) |
+## Planning
 
-### Mesures de conformité RGPD
+| Jours | Phase | Équipier | Focus |
+|-------|-------|----------|-------|
+| J1 | Build | Mohamed | Switch Cisco IOU · 7 VLANs · pfSense début |
+| J1 | Build | Eddy | Repo GitHub · Kanban Notion · Ubuntu ML-SRV-WEB-01 |
+| J2 | Build | Mohamed | pfSense règles · OpenVPN (binôme Eric) · AD-01 |
+| J2 | Build | Eddy | Nginx · HTTPS · Site vitrine · MySQL (binôme Cheima) |
+| J2 | Build | Cheima | MySQL · phpMyAdmin · File Server |
+| J2 | Build | Eric | OpenVPN + MFA (binôme Mohamed) |
+| J2 | Build | Emilien | Zabbix installation |
+| J3 | Build | Mohamed | AD-02 · Jumpbox x2 |
+| J3 | Build | Eddy | Passbolt CE · Jointure AD · Doc v1 |
+| J3 | Build | Cheima | UrBackup · Backup Storage |
+| J3 | Build | Eric + Emilien | Wazuh SIEM · Agents |
+| J4–J5 | Build | Eddy | Doc technique · RGPD · Slides début |
+| J4–J5 | Build | Cheima | Tests intégration Web ↔ BDD |
+| J4–J5 | Build | Mohamed | Tests réseau · Connectivité inter-VLANs · Documentation |
+| J6–J8 | Pentest | Eric | Pentest accès · Bypass VPN · Authentification |
+| J6–J8 | Pentest | Emilien | Pentest réseau · Nmap · VLANs · pfSense |
+| J6–J8 | Pentest | Eddy | Rapport pentest consolidé |
+| J9–J10 | Présentation | Toute l'équipe | Répétitions · Démo live · Jury |
 
-- Région AWS Paris (eu-west-3) → données restent dans l'UE → pas de transfert hors UE
-- Chiffrement AES-256 avant envoi → AWS ne peut pas lire les données
-- IAM Policy restrictive → accès uniquement depuis ML-SRV-URBACKUP-01
-- Logs d'accès S3 activés → traçabilité complète
+---
+
+## Conformité RGPD
+
+Les données de santé traitées dans ce projet fictif sont des **données sensibles au sens de l'Article 9 du RGPD**.  
+Mesures implémentées :
+- Chiffrement en transit (TLS 1.2/1.3 sur tous les services exposés)
+- Segmentation réseau (isolation VLAN 50 DMZ, VLAN 20 Serveurs)
+- Contrôle d'accès par rôle (Active Directory + GPO)
+- Journalisation des accès (Wazuh SIEM)
+- Politique de sauvegarde chiffrée (UrBackup)
+- Gestionnaire de mots de passe dédié (Passbolt)
+- Registre des traitements documenté → [docs/rgpd/](./docs/rgpd/)
+
+---
+
+## Hébergement
+
+VM Jedha · GNS3 + VirtualBox · Accès SSH via jumpbox ML-SRV-JUMP-01
 
 ---
 
