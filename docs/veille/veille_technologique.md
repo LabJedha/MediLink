@@ -1,7 +1,7 @@
 ﻿# Technology Watch Report - MediLink Infrastructure
 
 > **Jedha Bootcamp 2025 - Final Project**
-> Author : Eddy GASSAB
+> Author : Eric & Emilien
 > Last update : J5 - March 30, 2026
 
 ---
