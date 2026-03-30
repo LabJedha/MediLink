@@ -35,7 +35,7 @@
 ## Contexte du projet
 
 Le projet MediLink simule l'infrastructure IT d'un cabinet médical fictif.  
-Les contraintes sont volontairement fortes : données de santé (Article 9 RGPD), segmentation réseau avancée, authentification multi-facteurs, traçabilité des accès.
+Les contraintes sont volontairement fortes : données de santé (Article 9 RGPD), segmentation réseau avancée, authentification multi-facteurs, traçabilité des accè, ainsi qu’une approche conforme aux exigences HDS (Hébergement de Données de Santé).
 
 **Objectif :** déployer, sécuriser et documenter une infrastructure complète, puis la présenter devant un jury.
 
