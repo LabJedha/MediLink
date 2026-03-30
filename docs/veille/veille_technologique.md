@@ -1,4 +1,4 @@
-# Technology Watch Report — MediLink Infrastructure
+﻿# Technology Watch Report — MediLink Infrastructure
 
 > **Jedha Bootcamp 2025 — Final Project**  
 > Authors : Eric + Emilien  
