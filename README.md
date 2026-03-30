@@ -10,11 +10,11 @@
 
 | Équipier | Rôle | Périmètre |
 |----------|------|-----------|
-| **Mohamed** | Infrastructure & Réseau | GNS3 · pfSense · Switch · AD · Jumpbox |
-| **Eric** | Sécurité & Accès | OpenVPN · MFA · Wazuh · Pentest accès |
-| **Eddy** | Chef de projet technique | Nginx · Passbolt · Doc · Slides Démo Day |
-| **Cheima** | BDD · Fichiers · Backup | MySQL · File Server · UrBackup |
-| **Emilien** | Monitoring & Pentest réseau | Zabbix · Wazuh (binôme) · Pentest réseau |
+| **Mohamed SOUAFI** | Infrastructure & Réseau | GNS3 · pfSense · Switch · AD · Jumpbox |
+| **Eric GAYMARD** | Sécurité & Accès | OpenVPN · MFA · Wazuh · Pentest accès |
+| **Eddy GASSAB** | Chef de projet technique | Nginx · Passbolt · Doc · Slides Démo Day |
+| **Cheima ANICHE** | BDD · Fichiers · Backup | MySQL · File Server · UrBackup |
+| **Emilien SIEUDAT** | Monitoring & Pentest réseau | Zabbix · Wazuh (binôme) · Pentest réseau |
 
 ---
 
