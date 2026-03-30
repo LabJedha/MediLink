@@ -11,10 +11,10 @@
 | Équipier | Rôle | Périmètre |
 |----------|------|-----------|
 | **Mohamed SOUAFI** | Infrastructure & Réseau | GNS3 · pfSense · Switch · AD · Jumpbox · OpenVPN|
-| **Eric GAYMARD** | Sécurité & Accès · Backup | OpenVPN · MFA · Wazuh · Pentest accès · Doc EN |
-| **Eddy GASSAB** | Chef de projet technique | Nginx · Passbolt · Doc · Site Web · Slides Démo Day |
+| **Eric GAYMARD** | Sécurité & Accès · Backup | OpenVPN · MFA · Wazuh · Pentest accès · Doc (EN) |
+| **Eddy GASSAB** | Chef de projet technique | Nginx · Passbolt · Doc (FR) · Site Web · Slides Démo Day |
 | **Cheima ANICHE** | BDD · Fichiers · Backup | MySQL · File Server · UrBackup |
-| **Emilien SIEUDAT** | Monitoring & Pentest réseau | Zabbix · Pentest réseau · Doc EN |
+| **Emilien SIEUDAT** | Monitoring & Pentest réseau | Zabbix · Pentest réseau · Doc (EN) |
 
 ---
 
