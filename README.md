@@ -1,4 +1,4 @@
-﻿# MediLink — Infrastructure IT · Cabinet Médical fictif — Auteur : Eddy GASSAB
+﻿# MediLink — Infrastructure IT · Cabinet Médical fictif — Créateur du contenu : Eddy GASSAB
 
 > **Jedha Bootcamp 2025 — Projet Final**  
 > Infrastructure IT sécurisée simulant les besoins d'un cabinet médical  
