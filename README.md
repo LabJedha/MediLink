@@ -4,7 +4,7 @@
 > Infrastructure IT sécurisée adaptée aux besoins d’un cabinet médical en zone désertifiée
 > 
 > Durée : 10 jours · Démarrage : 23 mars 2026
-> Gestion du contenu : Eddy GASSAB
+> Gestion du contenu GitHub : Eddy GASSAB
 
 ---
 
