@@ -119,10 +119,10 @@ ML-NET-SW-01 · Cisco IOU L2 — Switch · Routage inter-VLANs
 MediLink/
 ├── README.md
 ├── docs/
-│   ├── architecture/       # Schémas réseau · draw.io
-│   ├── rgpd/               # Registre des traitements RGPD
-│   ├── pentest/            # Rapport pentest (J7-J8)
-│   └── procedures/         # Procédures techniques (SSH, VPN, Passbolt)
+│   ├── architecture/       # Schémas réseau · draw.io (Mohamed/Eddy)
+│   ├── rgpd/               # Registre des traitements RGPD (Tous)
+│   ├── pentest/            # Rapport pentest (Emilien/Eric/Eddy)
+│   └── procedures/         # Procédures techniques SSH, VPN, Passbolt (Mohamed/Eric/Eddy)
 ├── configs/
 │   ├── pfsense/            # Règles pfSense (Mohamed)
 │   ├── switch/             # Config Cisco IOU (Mohamed)
@@ -131,10 +131,11 @@ MediLink/
 │   ├── ad/                 # GPO + scripts AD (Mohamed)
 │   ├── wazuh/              # Config Wazuh (Eric)
 │   └── zabbix/             # Config Zabbix (Emilien)
+│   └── backup/             # Config backup (Cheima)
 ├── scripts/
 │   └── setup/              # Scripts d'installation
 └── presentations/
-    └── demo-day/           # Slides Démo Day (Eddy)
+    └── demo-day/           # Slides Démo Day (Tous)
 ```
 
 ---
@@ -146,14 +147,14 @@ MediLink/
 | J1 | Build | Mohamed | Switch Cisco IOU · 7 VLANs · pfSense début |
 | J1 | Build | Eddy | Repo GitHub · Kanban Notion · Ubuntu ML-SRV-WEB-01 |
 | J2 | Build | Mohamed | pfSense règles · OpenVPN (binôme Eric) · AD-01 |
-| J2 | Build | Eddy | Nginx · HTTPS · Site vitrine · MySQL (binôme Cheima) |
+| J2 | Build | Eddy | Nginx · HTTPS · Site vitrine · MySQL |
 | J2 | Build | Cheima | MySQL · phpMyAdmin · File Server |
 | J2 | Build | Eric | OpenVPN + MFA (binôme Mohamed) |
 | J2 | Build | Emilien | Zabbix installation |
 | J3 | Build | Mohamed | AD-02 · Jumpbox x2 |
 | J3 | Build | Eddy | Passbolt CE · Jointure AD · Doc v1 |
 | J3 | Build | Cheima | UrBackup · Backup Storage |
-| J3 | Build | Eric + Emilien | Wazuh SIEM · Agents |
+| J3 | Build | Emilien + Eric | Zabix · Wazuh SIEM · Agents |
 | J4–J5 | Build | Eddy | Doc technique · RGPD · Slides début |
 | J4–J5 | Build | Cheima | Tests intégration Web ↔ BDD |
 | J4–J5 | Build | Mohamed | Tests réseau · Connectivité inter-VLANs · Documentation |
