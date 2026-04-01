@@ -142,28 +142,26 @@ MediLink/
 │   └── setup/              # Scripts d'installation
 └── presentations/
     └── demo-day/           # Slides Démo Day (Tous)
-```
-
 ---
 
 ## Planning
 
 | Jours | Phase | Équipier | Focus |
 |-------|-------|----------|-------|
-| J1 | Build | Mohamed Ghazi | Switch Cisco IOU · 7 VLANs · pfSense début |
+| J1 | Build | Mohamed | Switch Cisco IOU · 7 VLANs · pfSense début |
 | J1 | Build | Eddy | Repo GitHub · Kanban Notion · Ubuntu ML-SRV-WEB-01 |
-| J2 | Build | Mohamed Ghazi | pfSense règles · OpenVPN (binôme Eric) · AD-01 |
+| J2 | Build | Mohamed | pfSense règles · OpenVPN (binôme Eric) · AD-01 |
 | J2 | Build | Eddy | Nginx · HTTPS · Site vitrine · MySQL |
 | J2 | Build | Cheima | MySQL · phpMyAdmin · File Server |
 | J2 | Build | Eric | OpenVPN + MFA (binôme Mohamed) |
 | J2 | Build | Emilien | Zabbix installation |
-| J3 | Build | Mohamed Ghazi | AD-02 · Jumpbox x2 |
+| J3 | Build | Mohamed | AD-02 · Jumpbox x2 |
 | J3 | Build | Eddy | Passbolt CE · Jointure AD · Doc v1 |
 | J3 | Build | Cheima | UrBackup · Backup Storage |
 | J3 | Build | Emilien + Eric | Zabix · Wazuh SIEM · Agents |
 | J4–J5 | Build | Eddy | Doc technique · RGPD · Slides début |
 | J4–J5 | Build | Cheima | Tests intégration Web ↔ BDD |
-| J4–J5 | Build | Mohamed Ghazi | Tests réseau · Connectivité inter-VLANs · Documentation |
+| J4–J5 | Build | Mohamed | Tests réseau · Connectivité inter-VLANs · Documentation |
 | J6–J8 | Pentest | Eric | Pentest accès · Bypass VPN · Authentification |
 | J6–J8 | Pentest | Emilien | Pentest réseau · Nmap · VLANs · pfSense |
 | J6–J8 | Pentest | Eddy | Rapport pentest consolidé |
