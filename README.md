@@ -142,6 +142,7 @@ MediLink/
 │   └── setup/              # Scripts d'installation
 └── presentations/
     └── demo-day/           # Slides Démo Day (Tous)
+
 ---
 
 ## Planning
