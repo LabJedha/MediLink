@@ -120,7 +120,8 @@ ML-NET-SW-02 · Cisco IOU L2 — Switch · Routage inter-VLANs
 ---
 
 ## Structure du repo
-```
+
+---
 MediLink/
 ├── README.md
 ├── docs/
