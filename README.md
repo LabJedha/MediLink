@@ -79,7 +79,7 @@ ML-NET-SW-01 · Cisco IOU L2 — Switch · Routage inter-VLANs
 | 6 | ML-SRV-JUMP-02 | Ubuntu 22.04 | 10 | 192.168.10.11/28 | 1 Go | Mohamed |
 | 7 | ML-SRV-PASS-01 | Ubuntu 22.04 | 10 | 192.168.10.12/28 | 1 Go | Eddy |
 | 8 | ML-SRV-WEB-01 | Ubuntu 22.04 | 50 | 192.168.50.2/29 | 2 Go | Eddy |
-| 9 | ML-SRV-FILE-01 | Ubuntu 22.04 | 20 | 192.168.20.12/27 | 2 Go | Cheima |
+| 9 | ML-SRV-FILE-01 | Windows Server 2022 | 20 | 192.168.20.12/27 | 2 Go | Cheima |
 | 10 | ML-SRV-URBACKUP-01 | Ubuntu 22.04 | 20 | 192.168.20.13/27 | 2 Go | Cheima |
 | 11 | ML-SRV-BACKUP-01 | Ubuntu 22.04 | 20 | 192.168.20.14/27 | 1 Go | Cheima |
 | 12 | ML-SRV-WAZUH-01 | Ubuntu 22.04 | 70 | 192.168.70.3/29 | 4 Go | Eric |
