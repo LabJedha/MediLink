@@ -78,13 +78,13 @@ ML-NET-SW-02 · Cisco IOU L2 — Switch · Routage inter-VLANs
 
 | # | Machine | OS | VLAN | IP | RAM | Équipier |
 |---|---------|----|----|-----|-----|----------|
-| 1 | ML-NET-FW-01 | FreeBSD (pfSense) | — | — | 512 Mo | Mohamed Ghazi |
-| 2 | ML-NET-SW-01 | Cisco IOU L2 | — | — | 256 Mo | Mohamed Ghazi|
-| 3 | ML-NET-SW-02 | Cisco IOU L2 | — | — | 256 Mo | Mohamed Ghazi |
-| 4 | ML-SRV-AD-01 | Windows Server 2022 | 20 | 192.168.20.10/27 | 4 Go | Mohamed Ghazi |
-| 5 | ML-SRV-AD-02 | Windows Server 2022 | 20 | 192.168.20.11/27 | 4 Go | Mohamed Ghazi |
-| 6 | ML-SRV-JUMP-01 | Ubuntu 22.04 | 10 | 192.168.10.10/28 | 1 Go | Mohamed Ghazi |
-| 7 | ML-SRV-JUMP-02 | Ubuntu 22.04 | 10 | 192.168.10.11/28 | 1 Go | Mohamed Ghazi |
+| 1 | ML-NET-FW-01 | FreeBSD (pfSense) | — | — | 512 Mo | Mohamed |
+| 2 | ML-NET-SW-01 | Cisco IOU L2 | — | — | 256 Mo | Mohamed|
+| 3 | ML-NET-SW-02 | Cisco IOU L2 | — | — | 256 Mo | Mohamed|
+| 4 | ML-SRV-AD-01 | Windows Server 2022 | 20 | 192.168.20.10/27 | 4 Go | Mohamed|
+| 5 | ML-SRV-AD-02 | Windows Server 2022 | 20 | 192.168.20.11/27 | 4 Go | Mohamed |
+| 6 | ML-SRV-JUMP-01 | Ubuntu 22.04 | 10 | 192.168.10.10/28 | 1 Go | Mohamed|
+| 7 | ML-SRV-JUMP-02 | Ubuntu 22.04 | 10 | 192.168.10.11/28 | 1 Go | Mohamed|
 | 8 | ML-SRV-PASS-01 | Ubuntu 22.04 | 10 | 192.168.10.12/28 | 1 Go | Eddy |
 | 9 | ML-SRV-WEB-01 | Ubuntu 22.04 | 50 | 192.168.50.2/29 | 2 Go | Eddy |
 | 10 | ML-SRV-FILE-01 | Windows Server 2022 | 20 | 192.168.20.12/27 | 2 Go | Cheima |
@@ -125,16 +125,16 @@ ML-NET-SW-02 · Cisco IOU L2 — Switch · Routage inter-VLANs
 MediLink/
 ├── README.md
 ├── docs/
-│   ├── architecture/       # Schémas réseau · draw.io (Mohamed Ghazi/Eddy)
+│   ├── architecture/       # Schémas réseau · draw.io (Mohamed/Eddy)
 │   ├── rgpd/               # Registre des traitements RGPD (Tous)
 │   ├── pentest/            # Rapport pentest (Emilien/Eric/Eddy)
-│   └── procedures/         # Procédures techniques SSH, VPN, Passbolt (Mohamed Ghazi/Eric/Eddy)
+│   └── procedures/         # Procédures techniques SSH, VPN, Passbolt (Mohamed /Eric/Eddy)
 ├── configs/
-│   ├── pfsense/            # Règles pfSense (Mohamed Ghazi)
-│   ├── switch/             # Config Cisco IOU (Mohamed Ghazi)
+│   ├── pfsense/            # Règles pfSense (Mohamed)
+│   ├── switch/             # Config Cisco IOU (Mohamed)
 │   ├── nginx/              # Config Nginx (Eddy)
 │   ├── passbolt/           # Config Passbolt (Eddy)
-│   ├── ad/                 # GPO + scripts AD (Mohamed ghazi)
+│   ├── ad/                 # GPO + scripts AD (Mohamed)
 │   ├── wazuh/              # Config Wazuh (Eric)
 │   └── zabbix/             # Config Zabbix (Emilien)
 │   └── backup/             # Config backup (Cheima)
@@ -155,7 +155,7 @@ MediLink/
 | J2 | Build | Mohamed Ghazi | pfSense règles · OpenVPN (binôme Eric) · AD-01 |
 | J2 | Build | Eddy | Nginx · HTTPS · Site vitrine · MySQL |
 | J2 | Build | Cheima | MySQL · phpMyAdmin · File Server |
-| J2 | Build | Eric | OpenVPN + MFA (binôme Mohamed Ghazi) |
+| J2 | Build | Eric | OpenVPN + MFA (binôme Mohamed) |
 | J2 | Build | Emilien | Zabbix installation |
 | J3 | Build | Mohamed Ghazi | AD-02 · Jumpbox x2 |
 | J3 | Build | Eddy | Passbolt CE · Jointure AD · Doc v1 |
