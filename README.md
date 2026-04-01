@@ -56,14 +56,22 @@ ML-NET-SW-01 · Cisco IOU L2 — Switch · Routage inter-VLANs
     ├── VLAN 20  · Serveurs      · 192.168.20.0/27  · AD x2 · Fichiers · Backup
     ├── VLAN 30  · WiFi Interne  · 192.168.30.0/26  · Médecins · Infirmiers
     ├── VLAN 40  · Administratif · 192.168.40.0/27  · RH · Comptabilité
-    ├── VLAN 50  · DMZ           · 192.168.50.0/29  · Nginx · MySQL
     ├── VLAN 60  · WiFi Guest    · 192.168.60.0/26  · Patients (Internet only)
     ├── VLAN 70  · Monitoring    · 192.168.70.0/29  · Wazuh · Zabbix
     └── VLAN 999 · Parking       · —                · Ports inutilisés · Imprimantes · Non assignés
 
 ☁️  AWS S3 (hors site) — Sauvegarde externe chiffrée · Règle 3-2-1 · Fictif / sur plan
-```
 
+Internet (WAN)
+    │
+    ▼
+ML-NET-FW-01 · pfSense (FreeBSD) — Firewall · NAT · VPN
+    │
+    ▼
+ML-NET-SW-02 · Cisco IOU L2 — Switch · Routage inter-VLANs
+    
+    ├── VLAN 50  · DMZ           · 192.168.50.0/29  · Nginx · MySQL
+    └── VLAN 999 · Parking       · —                · Ports inutilisés · Imprimantes · Non assignés
 ---
 
 ## Machines déployées
@@ -94,7 +102,7 @@ ML-NET-SW-01 · Cisco IOU L2 — Switch · Routage inter-VLANs
 
 | Catégorie | Outil | Rôle |
 |-----------|-------|------|
-| Réseau / Pare-feu | pfSense | Firewall · VLANs · NAT · VPN . Routage |
+| Réseau / Pare-feu | pfSense | Firewall · NAT · VPN . Routage |
 | Switch | Cisco IOU L2 (GNS3) | VLANs |
 | Annuaire | Windows Server AD x2 | Authentification · DHCP · DNS · GPO |
 | Accès sécurisé | Jumpbox x2 + Passbolt | SSH/RDP isolé · Gestionnaire MDP |
