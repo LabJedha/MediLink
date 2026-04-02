@@ -1,4 +1,8 @@
-#Création des groupes globaux (GC)
+# Gestion des utilisateurs et permissions (AGDLP)
+
+## Création des groupes globaux (GC)
+
+```powershell
 New-ADGroup -Name "GC-Medecins" -GroupScope Global -GroupCategory Security
 New-ADGroup -Name "GC-Infirmiers" -GroupScope Global -GroupCategory Security
 New-ADGroup -Name "GC-Administratif" -GroupScope Global -GroupCategory Security
@@ -7,7 +11,7 @@ New-ADGroup -Name "GC-RH" -GroupScope Global -GroupCategory Security
 New-ADGroup -Name "GC-ServicesGeneraux" -GroupScope Global -GroupCategory Security
 New-ADGroup -Name "GC-IT" -GroupScope Global -GroupCategory Security
 
-#Ajout des utilisateurs aux groupes
+#Ajout des utilisateurs au groupes
 Add-ADGroupMember -Identity "GC-Medecins" -Members "User1","User2"
 Add-ADGroupMember -Identity "GC-Infirmiers" -Members "User3","User4"
 
@@ -20,7 +24,8 @@ New-ADGroup -Name "DL-Commun-RW" -GroupScope DomainLocal -GroupCategory Security
 New-ADGroup -Name "DL-Commun-R" -GroupScope DomainLocal -GroupCategory Security
 New-ADGroup -Name "DL-AdminIT-FC" -GroupScope DomainLocal -GroupCategory Security
 
-#Liaison AGDLP (Groupes → Permissions)
+
+#Liaisons AGDLP
 Add-ADGroupMember -Identity "DL-DossiersMedicaux-RW" -Members "GC-Medecins"
 Add-ADGroupMember -Identity "DL-DossiersMedicaux-R" -Members "GC-Infirmiers"
 
