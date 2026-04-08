@@ -1,8 +1,8 @@
-# MediLink — Infrastructure IT · Cabinet Médical fictif — Auteur : Eddy GASSAB
+# MediLink — Infrastructure IT · Cabinet Médical fictif 
 
 > **Jedha Bootcamp 2025 — Projet Final**  
 > Infrastructure IT sécurisée simulant les besoins d'un cabinet médical  
-> Durée : 10 jours · Démarrage : 23 mars 2026
+> Durée : 10 jours · Démarrage : 23 mars 2026 - Créateur : Eddy GASSAB
 
 ---
 
