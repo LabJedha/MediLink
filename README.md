@@ -26,8 +26,7 @@
 - 🔐 [Registre RGPD](./docs/rgpd/)
 - 💰 [Estimation budgétaire](./docs/budget/budget_medilink.md)
 - 📊 [Analyse PESTEL](./docs/pestel/pestel_medilink.md)
-- 🔍 [Rapport de pentest](./docs/pentest/)
-- 🎤 [Slides Démo Day](./presentations/demo-day/)
+
 
 ---
 
