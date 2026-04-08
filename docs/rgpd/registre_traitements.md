@@ -1,7 +1,7 @@
-# Registre des activités de traitement — Cabinet Médical MediLink — Auteur : Eddy GASSAB
+# Registre des activités de traitement — Cabinet Médical MediLink 
 
 > **Article 30 du Règlement Général sur la Protection des Données (RGPD)**  
-> Jedha Bootcamp 2025 — Projet Final  
+> Jedha Bootcamp 2025 — Projet Final - Créateur : Eddy GASSAB 
 > Responsable du traitement : Cabinet Médical MediLink (fictif)  
 > Dernière mise à jour : J4 · 26 mars 2026
 
