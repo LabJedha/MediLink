@@ -2,7 +2,7 @@
 
 > **Cabinet Médical Pluridisciplinaire — Zone Désert Médical**  
 > 8 spécialités · 17 praticiens · 3 infirmiers · Infrastructure IT sécurisée on-premise  
-> Jedha Bootcamp 2025 — Projet Final  
+> Jedha Bootcamp 2025 — Projet Final -Créateur du contenu : Eddy GASSAB 
 > Version : v2.0 · 26 mars 2026
 
 ---
