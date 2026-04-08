@@ -1,4 +1,4 @@
-# Analyse PESTEL — Infrastructure IT MediLink
+# Analyse PESTEL — Infrastructure IT MediLink - Créateur : Eddy GASSAB
 
 > **Cabinet Médical Pluridisciplinaire — Zone Désert Médical**  
 > 8 spécialités · 17 praticiens · 3 infirmiers  
